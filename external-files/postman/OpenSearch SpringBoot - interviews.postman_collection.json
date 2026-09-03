@@ -1,0 +1,90 @@
+{
+  "info": {
+    "_postman_id": "740070ee-407e-4647-8c4b-99a36a7bd0b1",
+    "name": "OpenSearch SpringBoot - interviews",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "11729080",
+    "_collection_link": "https://go.postman.co/collection/11729080-740070ee-407e-4647-8c4b-99a36a7bd0b1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Interviews API",
+      "item": [
+        {
+          "name": "Add Interview",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"participantName\": \"Mike Szmike\",\n    \"location\": \"Bydgoszcz\",\n    \"country\": \"Poland\",\n    \"interviewDate\": \"2026-02-10\",\n    \"transcript\": [\n        {\n            \"question\": \"Where did you study?\",\n            \"answer\": \"I finished my masters at UJ in Kraków\"\n        },\n        {\n            \"question\": \"What is your area of expertise?\",\n            \"answer\": \"I specialize in knowledge graphs\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/interviews",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "interviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\": [\"kraków\"],\n    \"metadata\": {\n        \"country\": \"Poland\"\n    },\n    \"page\": 0,\n    \"size\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/api/interviews/search",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "interviews",
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{host}}/api/interviews/fbd53617-1e1c-4a5d-8198-5006bf147aeb",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "interviews",
+                "fbd53617-1e1c-4a5d-8198-5006bf147aeb"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

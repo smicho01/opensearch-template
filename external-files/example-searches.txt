@@ -1,0 +1,40 @@
+{
+    "content": ["University"],
+    "metadata": {
+        "country": "UK"
+    },
+    "page": 0,
+    "size": 10
+}
+
+--------------------------------
+
+{
+    "content": ["masters", "distributed systems"],
+    "page": 0,
+    "size": 10
+}
+
+--------------------------------
+
+{
+    "content": ["kubernetes"],
+    "page": 0,
+    "size": 10
+}
+
+--------------------------------
+
+{
+    "content": ["area of expertise"],
+    "page": 0,
+    "size": 10
+}
+
+--------------------------------
+
+{
+    "content": ["masters"],
+    "page": 0,
+    "size": 10
+}

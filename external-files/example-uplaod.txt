@@ -1,0 +1,16 @@
+{
+    "participantName": "Mike Szmike",
+    "location": "Bydgoszcz",
+    "country": "Poland",
+    "interviewDate": "2026-02-10",
+    "transcript": [
+        {
+            "question": "Where did you study?",
+            "answer": "I finished my masters at UJ in Kraków"
+        },
+        {
+            "question": "What is your area of expertise?",
+            "answer": "I specialize in knowledge graphs"
+        }
+    ]
+}
