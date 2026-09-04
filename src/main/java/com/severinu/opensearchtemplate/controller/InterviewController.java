@@ -1,19 +1,17 @@
 package com.severinu.opensearchtemplate.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.severinu.opensearchtemplate.document.InterviewDocument;
 import com.severinu.opensearchtemplate.dto.SearchRequest;
 import com.severinu.opensearchtemplate.dto.SearchResponse;
 import com.severinu.opensearchtemplate.dto.UploadResponse;
 import com.severinu.opensearchtemplate.service.FileStorageService;
 import com.severinu.opensearchtemplate.service.InterviewSearchService;
-import org.springframework.beans.factory.annotation.Value;
+import com.severinu.opensearchtemplate.service.SearchRequestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -22,17 +20,14 @@ public class InterviewController {
 
     private final InterviewSearchService interviewSearchService;
     private final FileStorageService fileStorageService;
-    private final ObjectMapper objectMapper;
-
-    @Value("${opensearch.pagination.default-size:10}")
-    private int defaultPageSize;
+    private final SearchRequestService searchRequestService;
 
     public InterviewController(InterviewSearchService interviewSearchService,
                                FileStorageService fileStorageService,
-                               ObjectMapper objectMapper) {
+                               SearchRequestService searchRequestService) {
         this.interviewSearchService = interviewSearchService;
         this.fileStorageService = fileStorageService;
-        this.objectMapper = objectMapper;
+        this.searchRequestService = searchRequestService;
     }
 
     @PostMapping
@@ -48,26 +43,15 @@ public class InterviewController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<SearchResponse> search(@RequestBody Map<String, Object> searchPayload) throws IOException {
-        if (searchPayload.isEmpty()) {
+    public ResponseEntity<SearchResponse> search(@RequestBody SearchRequest searchRequest) throws IOException {
+        SearchRequest normalizedSearchRequest;
+        try {
+            normalizedSearchRequest = searchRequestService.normalizeAndValidate(searchRequest);
+        } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().build();
         }
 
-        SearchRequest searchRequest = objectMapper.convertValue(searchPayload, SearchRequest.class);
-
-        if (!searchRequest.hasCriteria()) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        if (searchRequest.getSize() <= 0) {
-            searchRequest.setSize(defaultPageSize);
-        }
-
-        if (searchRequest.getPage() < 0) {
-            searchRequest.setPage(0);
-        }
-
-        SearchResponse response = interviewSearchService.search(searchRequest);
+        SearchResponse response = interviewSearchService.search(normalizedSearchRequest);
         return ResponseEntity.ok(response);
     }
 
