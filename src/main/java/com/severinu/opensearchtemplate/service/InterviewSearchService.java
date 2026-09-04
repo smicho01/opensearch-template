@@ -8,6 +8,7 @@ import com.severinu.opensearchtemplate.repository.OpenSearchRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -16,14 +17,16 @@ import java.util.List;
 public class InterviewSearchService {
 
     private final OpenSearchRepository openSearchRepository;
+    private final Clock clock;
 
-    public InterviewSearchService(OpenSearchRepository openSearchRepository) {
+    public InterviewSearchService(OpenSearchRepository openSearchRepository, Clock clock) {
         this.openSearchRepository = openSearchRepository;
+        this.clock = clock;
     }
 
     public void indexInterview(InterviewDocument document) throws IOException {
         document.setUploadDateTime(
-                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                LocalDateTime.now(clock).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         );
         openSearchRepository.indexDocument(document);
     }
@@ -43,4 +46,6 @@ public class InterviewSearchService {
     public void deleteInterview(String id) throws IOException {
         openSearchRepository.deleteDocument(id);
     }
+
+
 }
